@@ -17,7 +17,7 @@ jobs:
           python-version: '3.9'
 
       - name: Install dependencies
-        run: pip install duckduckgo_search supabase groq
+        run: pip install ddgs supabase groq  # duckduckgo_search ki jagah ddgs
 
       - name: Run Scraper
         env:
