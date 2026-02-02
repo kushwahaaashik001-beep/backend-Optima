@@ -2,20 +2,23 @@ name: Lead Sniper Cron
 on:
   schedule:
     - cron: '*/15 * * * *' # Har 15 minute mein chalega
-  workflow_dispatch: # Manual button chalane ke liye
+  workflow_dispatch: # Manual button ke liye
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: ambassadors/setup-python@v2
+        uses: actions/setup-python@v4 # Yahan galti thi, ab theek hai
         with:
           python-version: '3.9'
+
       - name: Install dependencies
         run: pip install duckduckgo_search supabase groq
+
       - name: Run Scraper
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
