@@ -3,7 +3,7 @@ name: Lead Sniper Cron
 on:
   schedule:
     - cron: '*/15 * * * *' # Har 15 minute mein chalega
-  workflow_dispatch: # Manual button ke liye (Taki tum khud check kar sako)
+  workflow_dispatch: # Manual button ke liye
 
 jobs:
   build:
@@ -27,6 +27,5 @@ jobs:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-        # Is line se GitHub automatically folder ke andar ghus kar script chalayega
-        run: python scraper.py
-        working-directory: ./backend-Optima
+        # Direct path use kar rahe hain bina working-directory ke jhamela ke
+        run: python backend-Optima/scraper.py
