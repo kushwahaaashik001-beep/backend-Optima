@@ -2,8 +2,8 @@ name: Lead Sniper Cron
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch:
+    - cron: '*/15 * * * *' # Har 15 minute mein chalega
+  workflow_dispatch: # Manual button ke liye
 
 jobs:
   build:
@@ -17,17 +17,19 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Install dependencies
+      - name: Install ALL Dependencies
         run: |
           python -m pip install --upgrade pip
-          # Yahan humne fake_useragent bhi add kar diya hai
-          pip install duckduckgo_search supabase groq python-dotenv fake_useragent
+          # Yahan maine wo saari libraries likh di hain jo missing thi (bs4, requests, etc.)
+          pip install beautifulsoup4 requests fake_useragent duckduckgo_search supabase groq python-dotenv lxml
 
       - name: Run Scraper
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        # Smart Search: File kahin bhi ho, ye dhoondh kar chala dega
         run: |
           SCRAPER_PATH=$(find . -name "scraper.py" -print -quit)
+          echo "Found Scraper at: $SCRAPER_PATH"
           python "$SCRAPER_PATH"
